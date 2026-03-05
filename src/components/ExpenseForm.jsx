@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { ExpenseContext } from "../context/ExpenseContext";
 
 function ExpenseForm() {
-
   const { addTransaction } = useContext(ExpenseContext);
 
   const [title, setTitle] = useState("");
@@ -15,17 +14,25 @@ function ExpenseForm() {
 
     // Validation
     if (!title || amount <= 0) {
-      alert("Please enter valid title and amount");
+      alert("Please enter a valid title and amount");
       return;
     }
 
+    // Format date as DD-MMM-YYYY (e.g., 05-Mar-2026)
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
     const newTransaction = {
-      id: Date.now(),   // unique id
+      id: Date.now(), // unique id
       title: title,
       amount: Number(amount),
       category: category,
       type: type,
-      date: new Date().toLocaleDateString()
+      date: formattedDate, // Add formatted date
     };
 
     addTransaction(newTransaction);
@@ -38,11 +45,8 @@ function ExpenseForm() {
   };
 
   return (
-    <div className="bg-white shadow-xl rounded-3xl p-8 w-full">
-
-      <h2 className="text-2xl font-bold mb-4">
-        Add Transaction
-      </h2>
+    <div className="bg-white shadow-xl rounded-3xl p-8 w-full max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-6 text-center">Add Transaction</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -91,9 +95,7 @@ function ExpenseForm() {
         >
           Add Transaction
         </button>
-
       </form>
-
     </div>
   );
 }

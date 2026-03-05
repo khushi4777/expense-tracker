@@ -3,7 +3,6 @@ import { ExpenseContext } from "../context/ExpenseContext";
 import ExpenseItem from "./ExpenseItem";
 
 function ExpenseList() {
-
   const { state } = useContext(ExpenseContext);
 
   const [filterType, setFilterType] = useState("all");
@@ -11,18 +10,10 @@ function ExpenseList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredTransactions = state.transactions.filter((t) => {
-
-    const typeMatch =
-      filterType === "all" || t.type === filterType;
-
-    const categoryMatch =
-      filterCategory === "all" || t.category === filterCategory;
-
-    const searchMatch =
-      t.title.toLowerCase().includes(searchTerm.toLowerCase());
-
+    const typeMatch = filterType === "all" || t.type === filterType;
+    const categoryMatch = filterCategory === "all" || t.category === filterCategory;
+    const searchMatch = t.title.toLowerCase().includes(searchTerm.toLowerCase());
     return typeMatch && categoryMatch && searchMatch;
-
   });
 
   return (
@@ -71,9 +62,17 @@ function ExpenseList() {
 
       </div>
 
-      {/* Transaction List */}
-      <div className="space-y-3">
+      {/* Header row for transactions */}
+      <div className="flex justify-between items-center p-3 font-bold border-b border-gray-200 dark:border-gray-600">
+        <span className="w-24">Date</span>
+        <span className="flex-1 px-2">Title</span>
+        <span className="px-2">Amount</span>
+        <span className="px-2">Category</span>
+        <span className="px-2">Type</span>
+      </div>
 
+      {/* Transaction List */}
+      <div className="space-y-3 mt-2">
         {filteredTransactions.length === 0 ? (
           <p className="text-gray-500">No transactions found</p>
         ) : (
@@ -84,7 +83,6 @@ function ExpenseList() {
             />
           ))
         )}
-
       </div>
 
     </div>

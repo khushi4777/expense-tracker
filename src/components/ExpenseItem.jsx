@@ -17,6 +17,10 @@ function ExpenseItem({ transaction }) {
         <p className="text-sm text-gray-600">
           {transaction.category}
         </p>
+                <p className="text-xs text-gray-400">
+          {transaction.date}
+        </p>
+
       </div>
 
       <div className="flex items-center gap-4">
